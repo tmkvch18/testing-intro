@@ -36,15 +36,18 @@ function changeQuantity(cart, id, qty) {
   }
 
   if (existing.stock < qty) {
-    throw new RangeError("Количество товара не может быть больше, чем есть на складе");
+    throw new RangeError(
+      "Количество товара не может быть больше, чем есть на складе",
+    );
   }
 
   return cart.map((p) => (p.id === id ? { ...p, quantity: qty } : p));
 }
 
-function removeFromCart() {
-  return notImplemented();
+function removeFromCart(cart, id) {
+  return cart.filter((p) => p.id !== id);
 }
+
 function calculateCartSubtotal() {
   return notImplemented();
 }
