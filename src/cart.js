@@ -1,7 +1,3 @@
-function notImplemented() {
-  throw new Error("Корзина ещё не реализована. Сначала прочитайте тесты.");
-}
-
 function addToCart(cart, product, qty) {
   if (qty < 1) {
     throw new RangeError("Товара не может быть 0");
@@ -52,8 +48,23 @@ function calculateCartSubtotal(cart) {
   return cart.reduce((acc, p) => acc + p.price * p.quantity, 0);
 }
 
-function calculateOrderTotal() {
-  return notImplemented();
+function calculateOrderTotal(cart, promo) {
+  const subtotal = calculateCartSubtotal(cart);
+
+  let discount = 0;
+
+  if (promo === "SAVE10" && subtotal >= 20000) {
+    discount = Math.round(subtotal * 0.1);
+  }
+
+  const delivery = subtotal <= 50000 ? 30000 : 0;
+
+  return {
+    subtotal,
+    discount,
+    delivery,
+    total: subtotal + delivery - discount,
+  };
 }
 
 const cartApi = {
